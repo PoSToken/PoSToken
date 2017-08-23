@@ -21,4 +21,4 @@ PoSToken is the world's first Proof-of-Stake smart contract token on Ethereum pl
   + 3rd - 15th Year Interest: 10%
 
 ## Resource
-**[Website](https://postoken.org)** | **[Whitepaper](https://postoken.org/whitepaper.pdf)** | **[Twitter](https://twitter/PoSToken)**  | **[Bitcointalk](https://bitcointalk.org)** | **[Slack](https://postoken.slack.com)**
+**[Website](https://postoken.org)** | **[Whitepaper](https://postoken.org/whitepaper.pdf)** | **[Twitter](https://twitter/PoSToken)**  | **[Bitcointalk](https://bitcointalk.org/index.php?topic=2110712.0)** | **[Slack](https://join.slack.com/t/postoken/shared_invite/MjI5OTE0NDQ0NjI3LTE1MDM0MDk3NDYtYWZmYWNjMTJkMg)**
