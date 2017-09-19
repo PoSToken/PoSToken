@@ -1,24 +1,34 @@
-# PoSToken
-The World's First Proof-of-Stake Smart Contract Token on Ethereum
+# Accelerator
+The World's First Proof-of-Stake Smart Contract Token on Ethereum Backed By A Physical IT Asset
 
-## What is PoSToken
-PoSToken is the world's first Proof-of-Stake smart contract token on Ethereum platform. It's based on the ERC20 Token Standard and implements all standard methods. As an Ethereum token, PoSToken first implements the Proof-of-Stake mechanism, meaning that every holder can earn some extra tokens just by holding PoSToken for a period of at least 3 days, greater than or equal to The Minimum Coin Age.
+## What is Accelerator
+The Accelerator Token is a proof-of-stake smart contract on Ethereum. It allows Accelerator
+Token holders to mine more Accelerator Tokens at pre-defined rate. Mining is a very simple
+process that takes place on Ethereum and can be done at home with little to no technical
+knowledge.
 
-## Specifications of PoSToken
-* **Name**: PoSToken
-* **Symbol**: POS
+## Physical IT Asset
+Furthermore, Accelerator Tokens are also backed by a physical asset called the Accelerator
+Network. The Accelerator Network is a cloud based mathematical super computer. Token
+holders can spend their Accelerator Tokens for services offered by the Accelerator Network. 
+
+
+## Specifications of Accelerator
+* **Name**: Accelerator
+* **Symbol**: ACC
 * **Decimals**: 18
 * **Standard**: ERC20 & PoSTokenStandard
 * **Platform**: Ethereum
-* **Maximum Total Supply**: 10,000,000 POS
-* **Initial Supply**: 1,000,000 POS
+* **Maximum Total Supply**: 10,000,000 ACC
+* **Initial Supply**: 250,000 ACC
 * **Distribution**: Free Airdrop
 * **Minimum Coin Age**: 3 Days
 * **Maximum Coin Age**: 90 Days
 * **PoS Annual Interest**
-  + 1st Year Interest: 100%
-  + 2nd Year Interest: 50%
-  + 3rd - 15th Year Interest: 10%
+  + 1st Year Interest: 300%
+  + 2nd Year Interest: 100%
+  + 3rd Year Interest: 50%
+  + 4th - 16th Year Interest: 10%
 
 ## Resource
-**[Website](https://postoken.org)** | **[Whitepaper](https://postoken.org/whitepaper.pdf)** | **[Twitter](https://twitter/PoSToken)**  | **[Bitcointalk](https://bitcointalk.org/index.php?topic=2110712.0)** | **[Slack](https://join.slack.com/t/postoken/shared_invite/MjI5OTE0NDQ0NjI3LTE1MDM0MDk3NDYtYWZmYWNjMTJkMg)**
+**[Website](https://accelerator.network)** | **[Whitepaper](https://accelerator.network/whitepaper.pdf)** | **[Twitter](https://twitter.com/Accelerator_Net)**  | **[Slack](http://slack.accelerator.network/)**

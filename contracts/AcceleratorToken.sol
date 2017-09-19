@@ -104,18 +104,20 @@ contract PoSTokenStandard {
     uint256 public stakeStartTime;
     uint256 public stakeMinAge;
     uint256 public stakeMaxAge;
-    function mint() returns (bool);
+   //Accelerator - Modified the correct technical term "mint" to a well know term "mine" for marketing purposes
+    function mine() returns (bool);
     function coinAge() constant returns (uint256);
     function annualInterest() constant returns (uint256);
-    event Mint(address indexed _address, uint _reward);
+    event Mine(address indexed _address, uint _reward);
 }
 
-
-contract PoSToken is ERC20,PoSTokenStandard,Ownable {
+//Accelerator - Changed name of contract
+contract Accelerator is ERC20,PoSTokenStandard,Ownable {
     using SafeMath for uint256;
 
-    string public name = "PoSToken";
-    string public symbol = "POS";
+//Accelerator - Changed name of contract
+    string public name = "Accelerator";
+    string public symbol = "ACC";
     uint public decimals = 18;
 
     uint public chainStartTime; //chain start time
@@ -138,7 +140,8 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
     mapping(address => mapping (address => uint256)) allowed;
     mapping(address => transferInStruct[]) transferIns;
 
-    event Burn(address indexed burner, uint256 value);
+//Accelerator - Removed burn system
+    //event Burn(address indexed burner, uint256 value);
 
     /**
      * @dev Fix for the ERC20 short address attack.
@@ -155,7 +158,9 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
 
     function PoSToken() {
         maxTotalSupply = 10**25; // 10 Mil.
-        totalInitialSupply = 10**24; // 1 Mil.
+        
+        //Accelerator - Modified initial supply to 250k
+        totalInitialSupply = 25*(10**22); // 250K
 
         chainStartTime = now;
         chainStartBlockNumber = block.number;
@@ -165,7 +170,8 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
     }
 
     function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) returns (bool) {
-        if(msg.sender == _to) return mint();
+        //Accelerator - Modified to mine
+        if(msg.sender == _to) return mine();
         balances[msg.sender] = balances[msg.sender].sub(_value);
         balances[_to] = balances[_to].add(_value);
         Transfer(msg.sender, _to, _value);
@@ -210,8 +216,8 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
     function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
         return allowed[_owner][_spender];
     }
-
-    function mint() canPoSMint returns (bool) {
+//Accelerator - Modified the correct technical term "mint" to a well know term "mine" for marketing purposes.
+    function mine() canPoSMint returns (bool) {
         if(balances[msg.sender] <= 0) return false;
         if(transferIns[msg.sender].length <= 0) return false;
 
@@ -222,8 +228,8 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
         balances[msg.sender] = balances[msg.sender].add(reward);
         delete transferIns[msg.sender];
         transferIns[msg.sender].push(transferInStruct(uint128(balances[msg.sender]),uint64(now)));
-
-        Mint(msg.sender, reward);
+//Accelerator - Change event to Mine
+        Mine(msg.sender, reward);
         return true;
     }
 
@@ -238,9 +244,12 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
     function annualInterest() constant returns(uint interest) {
         uint _now = now;
         interest = maxMintProofOfStake;
+        //Accelerator - Modified initial interest rate to 300%
         if((_now.sub(stakeStartTime)).div(1 years) == 0) {
+            interest = (1650 * maxMintProofOfStake).div(100);
+        } else if((_now.sub(stakeStartTime)).div(1 years) == 1) {
             interest = (770 * maxMintProofOfStake).div(100);
-        } else if((_now.sub(stakeStartTime)).div(1 years) == 1){
+        } else if((_now.sub(stakeStartTime)).div(1 years) == 2){
             interest = (435 * maxMintProofOfStake).div(100);
         }
     }
@@ -255,11 +264,15 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
         uint interest = maxMintProofOfStake;
         // Due to the high interest rate for the first two years, compounding should be taken into account.
         // Effective annual interest rate = (1 + (nominal rate / number of compounding periods)) ^ (number of compounding periods) - 1
+        //Accelerator - Modified initial interest rate to 300%
         if((_now.sub(stakeStartTime)).div(1 years) == 0) {
-            // 1st year effective annual interest rate is 100% when we select the stakeMaxAge (90 days) as the compounding period.
+            // 1st year effective annual interest rate is 300% when we select the stakeMaxAge (90 days) as the compounding period.
+            interest = (1650 * maxMintProofOfStake).div(100);
+        } else if((_now.sub(stakeStartTime)).div(1 years) == 1) {
+            // 2nd year effective annual interest rate is 100% when we select the stakeMaxAge (90 days) as the compounding period.
             interest = (770 * maxMintProofOfStake).div(100);
-        } else if((_now.sub(stakeStartTime)).div(1 years) == 1){
-            // 2nd year effective annual interest rate is 50%
+        } else if((_now.sub(stakeStartTime)).div(1 years) == 2){
+            // 3nd year effective annual interest rate is 50%
             interest = (435 * maxMintProofOfStake).div(100);
         }
 
@@ -284,7 +297,9 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
         stakeStartTime = timestamp;
     }
 
-    function ownerBurnToken(uint _value) onlyOwner {
+   //Accelerator - Remove Burn Token Capability
+  /*  
+  function ownerBurnToken(uint _value) onlyOwner {
         require(_value > 0);
 
         balances[msg.sender] = balances[msg.sender].sub(_value);
@@ -297,7 +312,7 @@ contract PoSToken is ERC20,PoSTokenStandard,Ownable {
 
         Burn(msg.sender, _value);
     }
-
+*/
     /* Batch token transfer. Used by contract creator to distribute initial tokens to holders */
     function batchTransfer(address[] _recipients, uint[] _values) onlyOwner returns (bool) {
         require( _recipients.length > 0 && _recipients.length == _values.length);
