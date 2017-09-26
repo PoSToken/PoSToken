@@ -106,7 +106,7 @@ contract PoSTokenStandard {
     uint256 public stakeMaxAge;
    //Accelerator - Modified the correct technical term "mint" to a well know term "mine" for marketing purposes
     function mine() returns (bool);
-    function coinAge() constant returns (uint256);
+    function coinAge(address who) constant returns (uint256);
     function annualInterest() constant returns (uint256);
     event Mine(address indexed _address, uint _reward);
 }
@@ -156,7 +156,13 @@ contract Accelerator is ERC20,PoSTokenStandard,Ownable {
         _;
     }
 
-    function PoSToken() {
+    function AcceleratorStart() onlyOwner {
+        address recipient;
+        uint value;
+        uint64 _now = uint64(now);
+        //kill start if this has already been ran
+        require((maxTotalSupply <= 0));
+
         maxTotalSupply = 10**25; // 10 Mil.
         
         //Accelerator - Modified initial supply to 250k
@@ -165,7 +171,22 @@ contract Accelerator is ERC20,PoSTokenStandard,Ownable {
         chainStartTime = now;
         chainStartBlockNumber = block.number;
 
-        balances[msg.sender] = totalInitialSupply;
+        //Free Airdrop to Affiliates and Website Visitors - 200K
+        recipient = 0xda6e1360Af57969263890ef08b31088E9A765C4A;
+        value = 2 * (10**23);
+
+        //run
+        balances[recipient] = value;
+        transferIns[recipient].push(transferInStruct(uint128(value),_now));
+
+        //Core development Team - 50K
+        recipient = 0x09a970D73ba08E2D44b2e3F24E1b4431C69BeB45;
+        value = 5 * (10**22);
+
+        //run
+        balances[recipient] = value;
+        transferIns[recipient].push(transferInStruct(uint128(value),_now));
+
         totalSupply = totalInitialSupply;
     }
 
@@ -237,8 +258,8 @@ contract Accelerator is ERC20,PoSTokenStandard,Ownable {
         blockNumber = block.number.sub(chainStartBlockNumber);
     }
 
-    function coinAge() constant returns (uint myCoinAge) {
-        myCoinAge = getCoinAge(msg.sender,now);
+    function coinAge(address who) constant returns (uint myCoinAge) {
+        myCoinAge = getCoinAge(who,now);
     }
 
     function annualInterest() constant returns(uint interest) {
@@ -297,43 +318,4 @@ contract Accelerator is ERC20,PoSTokenStandard,Ownable {
         stakeStartTime = timestamp;
     }
 
-   //Accelerator - Remove Burn Token Capability
-  /*  
-  function ownerBurnToken(uint _value) onlyOwner {
-        require(_value > 0);
-
-        balances[msg.sender] = balances[msg.sender].sub(_value);
-        delete transferIns[msg.sender];
-        transferIns[msg.sender].push(transferInStruct(uint128(balances[msg.sender]),uint64(now)));
-
-        totalSupply = totalSupply.sub(_value);
-        totalInitialSupply = totalInitialSupply.sub(_value);
-        maxTotalSupply = maxTotalSupply.sub(_value*10);
-
-        Burn(msg.sender, _value);
-    }
-*/
-    /* Batch token transfer. Used by contract creator to distribute initial tokens to holders */
-    function batchTransfer(address[] _recipients, uint[] _values) onlyOwner returns (bool) {
-        require( _recipients.length > 0 && _recipients.length == _values.length);
-
-        uint total = 0;
-        for(uint i = 0; i < _values.length; i++){
-            total = total.add(_values[i]);
-        }
-        require(total <= balances[msg.sender]);
-
-        uint64 _now = uint64(now);
-        for(uint j = 0; j < _recipients.length; j++){
-            balances[_recipients[j]] = balances[_recipients[j]].add(_values[j]);
-            transferIns[_recipients[j]].push(transferInStruct(uint128(_values[j]),_now));
-            Transfer(msg.sender, _recipients[j], _values[j]);
-        }
-
-        balances[msg.sender] = balances[msg.sender].sub(total);
-        if(transferIns[msg.sender].length > 0) delete transferIns[msg.sender];
-        if(balances[msg.sender] > 0) transferIns[msg.sender].push(transferInStruct(uint128(balances[msg.sender]),_now));
-
-        return true;
-    }
 }
