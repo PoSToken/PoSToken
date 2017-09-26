@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.4;
 
 
 /**
@@ -160,7 +160,7 @@ contract Accelerator is ERC20,PoSTokenStandard,Ownable {
         maxTotalSupply = 10**25; // 10 Mil.
         
         //Accelerator - Modified initial supply to 250k
-        totalInitialSupply = 25*(10**22); // 250K
+        totalInitialSupply = 2.5*(10**23); // 250K
 
         chainStartTime = now;
         chainStartBlockNumber = block.number;
