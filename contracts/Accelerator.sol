@@ -1,6 +1,5 @@
 pragma solidity ^0.4.4;
 /**
- * Blockchain will never be completed. It will continue to grow as long as there is imagination left in the world.
  * @title SafeMath
  * @dev Math operations with safety checks that throw on error
  */
