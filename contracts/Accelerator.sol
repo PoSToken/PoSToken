@@ -1,7 +1,6 @@
 pragma solidity ^0.4.4;
-
-
 /**
+ * Blockchain will never be completed. It will continue to grow as long as there is imagination left in the world.
  * @title SafeMath
  * @dev Math operations with safety checks that throw on error
  */
@@ -30,8 +29,6 @@ library SafeMath {
         return c;
     }
 }
-
-
 /**
  * @title Ownable
  * @dev The Ownable contract has an owner address, and provides basic authorization control
@@ -57,8 +54,6 @@ contract Ownable {
         require(msg.sender == owner);
         _;
     }
-
-
     /**
      * @dev Allows the current owner to transfer control of the contract to a newOwner.
      * @param newOwner The address to transfer ownership to.
@@ -69,8 +64,6 @@ contract Ownable {
     }
 
 }
-
-
 /**
  * @title ERC20Basic
  * @dev Simpler version of ERC20 interface
@@ -82,8 +75,6 @@ contract ERC20Basic {
     function transfer(address to, uint256 value) returns (bool);
     event Transfer(address indexed from, address indexed to, uint256 value);
 }
-
-
 /**
  * @title ERC20 interface
  * @dev see https://github.com/ethereum/EIPs/issues/20
@@ -94,8 +85,6 @@ contract ERC20 is ERC20Basic {
     function approve(address spender, uint256 value) returns (bool);
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
-
-
 /**
  * @title PoSTokenStandard
  * @dev the interface of PoSTokenStandard
@@ -110,11 +99,9 @@ contract PoSTokenStandard {
     function annualInterest() constant returns (uint256);
     event Mine(address indexed _address, uint _reward);
 }
-
 //Accelerator - Changed name of contract
 contract Accelerator is ERC20,PoSTokenStandard,Ownable {
     using SafeMath for uint256;
-
 //Accelerator - Changed name of contract
     string public name = "Accelerator";
     string public symbol = "ACC";
@@ -172,7 +159,7 @@ contract Accelerator is ERC20,PoSTokenStandard,Ownable {
         chainStartBlockNumber = block.number;
 
         //Free Airdrop to Affiliates and Website Visitors - 200K
-        recipient = 0xda6e1360Af57969263890ef08b31088E9A765C4A;
+        recipient = 0xFd3fBD60f3d394374d692C0cb7E3B90f064009b0;
         value = 2 * (10**23);
 
         //run
@@ -180,7 +167,7 @@ contract Accelerator is ERC20,PoSTokenStandard,Ownable {
         transferIns[recipient].push(transferInStruct(uint128(value),_now));
 
         //Core development Team - 50K
-        recipient = 0x09a970D73ba08E2D44b2e3F24E1b4431C69BeB45;
+        recipient = 0x347fdeCA4F170E59CE54AE63D2a841BCb39d3062;
         value = 5 * (10**22);
 
         //run
